@@ -3,14 +3,19 @@ import React from 'react';
 import { useSnackbar } from 'notistack';
 import { useSigner } from 'wagmi';
 import { Stack } from '@mui/material';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { mintTo } from '../../services/api';
 
 const Mint: React.FC<{ onMinted: () => void }> = ({ onMinted }) => {
   const [loading, setLoading] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const { openConnectModal } = useConnectModal();
   const { data: signer } = useSigner();
   const onMint = React.useCallback(async () => {
     if (!signer) {
+      if (openConnectModal) {
+        openConnectModal();
+      }
       return;
     }
     try {
@@ -24,7 +29,7 @@ const Mint: React.FC<{ onMinted: () => void }> = ({ onMinted }) => {
     } finally {
       setLoading(false);
     }
-  }, [enqueueSnackbar, onMinted, signer]);
+  }, [enqueueSnackbar, onMinted, openConnectModal, signer]);
 
   return (
     <>
