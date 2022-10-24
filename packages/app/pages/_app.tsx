@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import {
   connectorsForWallets,
   RainbowKitProvider,
+  DisclaimerComponent,
   Wallet,
 } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
@@ -43,6 +44,15 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
+const Disclaimer: DisclaimerComponent = ({ Text, Link }) => (
+  <Text>
+    By connecting your accounts, you agree to the{' '}
+    <Link href="https://termsofservice.xyz">Terms of Service</Link> and
+    acknowledge you have read and understand the protocol{' '}
+    <Link href="https://disclaimer.xyz">Disclaimer</Link>
+  </Text>
+);
+
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
@@ -52,7 +62,14 @@ export default function MyApp(props: MyAppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <WagmiConfig client={wagmiClient}>
-          <RainbowKitProvider chains={chains}>
+          <RainbowKitProvider
+            appInfo={{
+              appName: 'Magic.link Demo',
+              learnMoreUrl: 'https://niftykit.com/',
+              disclaimer: Disclaimer,
+            }}
+            modalSize="compact"
+            chains={chains}>
             <SnackbarProvider
               anchorOrigin={{
                 vertical: 'bottom',

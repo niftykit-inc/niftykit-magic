@@ -4,7 +4,6 @@ import {
   CardMedia,
   CircularProgress,
   Grid,
-  Stack,
   Typography,
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
