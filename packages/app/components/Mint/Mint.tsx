@@ -5,7 +5,7 @@ import { useSigner } from 'wagmi';
 import { Stack } from '@mui/material';
 import { mintTo } from '../../services/api';
 
-const Mint: React.FC<{}> = () => {
+const Mint: React.FC<{ onMinted: () => void }> = ({ onMinted }) => {
   const [loading, setLoading] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const { data: signer } = useSigner();
@@ -18,12 +18,13 @@ const Mint: React.FC<{}> = () => {
       const address = await signer.getAddress();
       await mintTo(address, 1, 0);
       enqueueSnackbar('Minted!', { variant: 'success' });
+      onMinted();
     } catch (err: any) {
       enqueueSnackbar(err.message, { variant: 'error' });
     } finally {
       setLoading(false);
     }
-  }, [enqueueSnackbar, signer]);
+  }, [enqueueSnackbar, onMinted, signer]);
 
   return (
     <>
