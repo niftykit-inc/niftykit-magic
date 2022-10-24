@@ -63,25 +63,27 @@ const Tokens: React.FC<{}> = () => {
           <Grid sx={{ marginBottom: '10px' }}>
             <Mint onMinted={getTokensCount} />
           </Grid>
-          <Grid container spacing={2}>
-            {tokens.map((token) => (
-              <Grid key={token.tokenId} item xs={2}>
-                <Card key={token.tokenId}>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={token.image}
-                    alt="token image"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Token # {token.tokenId}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+          {signer && (
+            <Grid container spacing={2}>
+              {tokens.map((token) => (
+                <Grid key={token.tokenId} item xs={2}>
+                  <Card key={token.tokenId}>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={token.image}
+                      alt="token image"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Token # {token.tokenId}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </>
       )}
     </>
