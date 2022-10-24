@@ -41,7 +41,7 @@ const Wallet: React.FC<{}> = () => {
                     variant="outlined"
                     onClick={openConnectModal}
                     type="button">
-                    Connect Wallet
+                    Magic.Link Connect
                   </Button>
                 );
               }
