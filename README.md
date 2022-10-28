@@ -1,4 +1,4 @@
-# Sample App to demonstrate the use magic.link with NiftyKit
+# Sample App to demonstrate the use of magic.link with NiftyKit
 
 ## Setup
 
