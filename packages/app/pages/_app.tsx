@@ -6,6 +6,7 @@ import {
   RainbowKitProvider,
   DisclaimerComponent,
   Wallet,
+  getDefaultWallets,
 } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 import { AppProps } from 'next/app';
@@ -24,16 +25,23 @@ const chainId =
 
 const { chains, provider } = configureChains([chainId], [publicProvider()]);
 
-const connectors = connectorsForWallets([
+const customConnectors = connectorsForWallets([
   {
     groupName: 'Recommended',
     wallets: [rainbowMagicConnector({ chains }) as unknown as Wallet],
   },
 ]);
 
+const { connectors } = getDefaultWallets({
+  appName: 'NiftyKit Magic',
+  chains,
+});
+
 const wagmiClient = createClient({
   autoConnect: true,
-  connectors,
+  connectors: () => {
+    return [...customConnectors(), ...connectors()];
+  },
   provider,
 });
 
